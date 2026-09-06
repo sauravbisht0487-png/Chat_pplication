@@ -1,11 +1,18 @@
-import React from 'react'
+
+import React, { useState } from "react";
+import Sidebar from "./Sidebar";
+import ChatContainer from "./ChatContainer";
+import NoChatSelected from "./NoChatSelected";
 
 const HomePage = () => {
-  return (
-    <div>
-      <h1>this is hme page</h1>
-    </div>
-  )
-}
+  const [selectedUser, setSelectedUser] = useState(null);
 
-export default HomePage
+  return (
+    <div className="h-screen flex">
+      <Sidebar selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
+      {selectedUser ? <ChatContainer selectedUser={selectedUser} /> : <NoChatSelected />}
+    </div>
+  );
+};
+
+export default HomePage;

@@ -1,8 +1,18 @@
-import axios from "axios";
+// frontend/src/context/AuthContext.jsx
+import { createContext, useContext, useState } from "react";
 
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api", // your backend base URL
-  withCredentials: true, // sends/receives the JWT cookie
-});
+const AuthContext = createContext(null);
 
-export default axiosInstance;
+export const AuthProvider = ({ children }) => {
+  const [authUser, setAuthUser] = useState(() => {
+    const saved = localStorage.getItem("chatUser");
+    return saved ? JSON.parse(saved) : null;
+  });
+  return (
+    <AuthContext.Provider value={{ authUser, setAuthUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
